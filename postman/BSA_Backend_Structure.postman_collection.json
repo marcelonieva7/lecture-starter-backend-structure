@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f3be64b7-587f-4bb9-8c06-6d9c88f31cd2",
-		"name": "hw-backend-structure",
+		"_postman_id": "b82d0ca6-e034-4b18-b417-071b6c62b991",
+		"name": "BSA Backend Structure",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "2166065"
 	},
@@ -22,12 +22,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/health",
+					"raw": "http://localhost:{{port}}/health",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"health"
 					]
@@ -36,13 +36,28 @@
 			"response": []
 		},
 		{
-			"name": "/users",
+			"name": "/users admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (responseCode.code === 200) {",
+							"    const jsonData = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
+							"    postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"type\": \"client\",\n    \"email\": \"exampl2222e@gmail.com\",\n    \"phone\": \"+380511679919\",\n    \"name\": \"Alex\",\n    \"city\": \"Kherson\"\n}",
+					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"type\": \"admin\",\n    \"email\": \"exampl2222e@gmail.com\",\n    \"phone\": \"+380511679919\",\n    \"name\": \"Alex\",\n    \"city\": \"Kherson\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,12 +65,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users",
+					"raw": "http://localhost:{{port}}/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"users"
 					]
@@ -64,20 +79,43 @@
 			"response": []
 		},
 		{
-			"name": "/users/:id",
+			"name": "/users client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (responseCode.code === 200) {",
+							"    const jsonData = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
+							"    postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"type\": \"client\",\n    \"email\": \"exampl3333e@gmail.com\",\n    \"phone\": \"+380511679920\",\n    \"name\": \"Alex\",\n    \"city\": \"Kherson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/users/32330b5b-8b49-42c6-ae18-e0708153465f",
+					"raw": "http://localhost:{{port}}/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
-						"users",
-						"32330b5b-8b49-42c6-ae18-e0708153465f"
+						"users"
 					]
 				}
 			},
@@ -91,7 +129,37 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyMzMwYjViLThiNDktNDJjNi1hZTE4LWUwNzA4MTUzNDY1ZiIsInR5cGUiOiJjbGllbnQiLCJpYXQiOjE2NzI1MzgyMjB9.nIWgwrX5kFIQu2Q19F2WbLaVNZO1T0D8BnP3YWmZNfA",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/:id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -100,7 +168,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"city\": \"Kherson2\"\n}",
+					"raw": "{\n    \"city\": \"Kherson3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -108,15 +176,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users/32330b5b-8b49-42c6-ae18-e0708153465f",
+					"raw": "http://localhost:{{port}}/users/{{userId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"users",
-						"32330b5b-8b49-42c6-ae18-e0708153465f"
+						"{{userId}}"
 					]
 				}
 			},
@@ -130,7 +198,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlmOWEwMmM2LTRjNDUtNDU3My1hZjgzLTA4OTUwYzYyMWNkMSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTYyMzY2ODE4M30.vWqqjjxxJyR-kAdqNxaxciuJ39Ptk88-iwY9mOEf36U",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -139,7 +207,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"userId\": \"32330b5b-8b49-42c6-ae18-e0708153465f\",\n    \"cardNumber\": \"111111111111\",\n    \"amount\": 50\n}",
+					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"userId\": \"{{userId}}\",\n    \"cardNumber\": \"111111111111\",\n    \"amount\": 50\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,12 +215,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/transactions",
+					"raw": "http://localhost:{{port}}/transactions",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"transactions"
 					]
@@ -162,13 +230,27 @@
 		},
 		{
 			"name": "/events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (responseCode.code === 200) {\r",
+							"    const jsonData = JSON.parse(responseBody);\r",
+							"    postman.setEnvironmentVariable(\"eventId\", jsonData.id);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlmOWEwMmM2LTRjNDUtNDU3My1hZjgzLTA4OTUwYzYyMWNkMSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTYyMzY2ODE4M30.vWqqjjxxJyR-kAdqNxaxciuJ39Ptk88-iwY9mOEf36U",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -185,12 +267,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/events",
+					"raw": "http://localhost:{{port}}/events",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"events"
 					]
@@ -206,7 +288,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyMzMwYjViLThiNDktNDJjNi1hZTE4LWUwNzA4MTUzNDY1ZiIsInR5cGUiOiJjbGllbnQiLCJpYXQiOjE2NzI1MzgyMjB9.nIWgwrX5kFIQu2Q19F2WbLaVNZO1T0D8BnP3YWmZNfA",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -215,7 +297,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventId\": \"a6ad002e-dff9-48bc-b3c8-2ee57ba85402\",\n    \"betAmount\": 50,\n    \"prediction\": \"w1\"\n}",
+					"raw": "{\n    \"eventId\": \"{{eventId}}\",\n    \"betAmount\": 50,\n    \"prediction\": \"w1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -223,12 +305,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/bets",
+					"raw": "http://localhost:{{port}}/bets",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"bets"
 					]
@@ -244,7 +326,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlmOWEwMmM2LTRjNDUtNDU3My1hZjgzLTA4OTUwYzYyMWNkMSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTYyMzY2ODE4M30.vWqqjjxxJyR-kAdqNxaxciuJ39Ptk88-iwY9mOEf36U",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -261,15 +343,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/events/a6ad002e-dff9-48bc-b3c8-2ee57ba85402",
+					"raw": "http://localhost:{{port}}/events/{{eventId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"events",
-						"a6ad002e-dff9-48bc-b3c8-2ee57ba85402"
+						"{{eventId}}"
 					]
 				}
 			},
@@ -283,7 +365,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjM2EwM2ZjLTk5N2YtNGJhZS05ZjQ2LTYyMzUwOTFlNDM5YSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTYyMzU5NTQ1NX0.Nz7UrgMwhbviVO72YurU1vGWUbw_1bEBe0sC2y680Y8",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -291,12 +373,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/stats",
+					"raw": "http://localhost:{{port}}/stats",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"stats"
 					]
