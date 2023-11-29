@@ -7,7 +7,7 @@ var ee = require('events');
 var dbConfig = require("./knexfile");
 var app = express();
 
-var port = 3000;
+var port = 4000;
 
 var statEmitter = new ee();
 var stats = {
@@ -95,7 +95,7 @@ app.post("/users", (req, res) => {
 });
 
 app.put("/users/:id", (req, res) => {
-  let token = req.headers['authorization'];
+  let token = req.headers[`authorization`];
   let tokenPayload;
   if(!token) {
     return res.status(401).send({ error: 'Not Authorized' });
@@ -151,7 +151,7 @@ app.post("/transactions", (req, res) => {
     return;
   };
 
-  let token = req.headers['authorization'];
+  let token = req.headers["authorization"];
   if(!token) {
     return res.status(401).send({ error: 'Not Authorized' });
   }
@@ -218,7 +218,8 @@ app.post("/events", (req, res) => {
   };
   
   try {
-    let token = req.headers['authorization'];
+    var authKey = "authorization";
+    let token = req.headers[authKey];
     if(!token) {
       return res.status(401).send({ error: 'Not Authorized' });
     }
@@ -296,7 +297,8 @@ app.post("/bets", (req, res) => {
   
   let userId;
   try {
-    let token = req.headers['authorization'];
+    var authorizationKey = 'authorization';
+    let token = req.headers[authorizationKey];
     if(!token) {
       return res.status(401).send({ error: 'Not Authorized' });
     }
@@ -390,7 +392,8 @@ app.put("/events/:id", (req, res) => {
   };
   
   try {
-    let token = req.headers['authorization'];
+    var authorization = `authorization`;
+    let token = req.headers[authorization];
     if(!token) {
       return res.status(401).send({ error: 'Not Authorized' });
     }
@@ -458,7 +461,8 @@ app.put("/events/:id", (req, res) => {
 
 app.get("/stats", (req, res) => {
   try {
-    let token = req.headers['authorization'];
+    var ak = 'authorization';
+    let token = req.headers[ak];
     if(!token) {
       return res.status(401).send({ error: 'Not Authorized' });
     }
