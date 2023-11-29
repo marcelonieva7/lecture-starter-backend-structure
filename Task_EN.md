@@ -14,7 +14,7 @@ _Congratulations! Not by hearsay, you already know about the Backend structure, 
 
 ![Neo from the Matrix, seating near Oracle and saying: "Who needs documentation, I can read code"](https://i.ibb.co/cN2CmJx/meme1.jpg "Meme")
 
-- Beside of invoking the tests, to figure out the existing business logic - the Postman [collection](https://github.com/BinaryStudioAcademy/lecture-starter-backend-structure/tree/main/postman) is here to help. Please feel free importing it into your own Postman to see the requests examples and playing with those requests during manual testing.
+- Beside of invoking the tests, to figure out the existing business logic - the Postman [collection](https://github.com/BinaryStudioAcademy/lecture-starter-backend-structure/tree/main/postman) is here to help. Please feel free importing it (don't forget the postman env file) into your own Postman to see the requests examples and playing with those requests during manual testing.
 
 Technologies:
 
