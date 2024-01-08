@@ -17,9 +17,17 @@
 
 ### Troubleshooting:
 * __Issue__: running the `npm run docker:test` command fails with:
-```
+```log
 1 error occurred:
         * checking context: can't stat ...
 ```
 * __Solution__: run `sudo chown -R $USER .docker_pgdata_test/` in terminal, while on the repo top level
 * __Another solution__: drop all related existing containers and re-run the command
+---
+* __Issue__: running the `npm run docker:test` command fails with:
+```log
+failed to solve: failed to solve with frontend dockerfile.v0: failed to build LLB: 
+  error from sender: 
+    open ./lecture-starter-backend-structure/.docker_pgdata: permission denied
+```
+* __Solution__: apparently, the `docker:dev:db` command was invoked before, which conflicts with the previously created container data. Simply delete the pg related folder `sudo rm -rf ./docker_pgdata`
