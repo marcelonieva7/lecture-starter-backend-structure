@@ -7,10 +7,25 @@
 1. `npm install`
 2.  create `.env` file, copy values from `.example.env`
 
-#### To run the server in local environment with containerized database:
+#### To run the server in local environment:
+
+##### * with containerized database:
 1. `npm run docker:dev:db` (runs database in docker container)
-2. `npm run migrate:latest && npm run seed` (run only once, next time you start the server - skip this step)
-3. `npm run dev` (runs the server)
+
+##### * with a system instance:
+1. Download and install the official Postgres **v.12** package for your OS - https://www.postgresql.org/download/
+2. Using a DB observer tool (PGAdmin, Dbeaver, etc.) create a database
+3. Update the `.env` with the relevant values:
+   * `DATABASE_PORT` (default during installation is `5432`)
+   * `DATABASE_NAME` (name of a newly created database)
+   * `DATABASE_USER` (default username during installation is `postgres`)
+   * `DATABASE_ACCESS_KEY` (password to the `postgres` user, which was also set during installation)
+
+##### apply the migrations
+1. `npm run migrate:latest && npm run seed` (run only once, next time you start the server - skip this step)
+
+##### start the server
+1. `npm run dev`
 
 #### To run the tests under the fully containerized environment:
 1. `npm run docker:test`
