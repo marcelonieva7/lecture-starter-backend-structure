@@ -21,6 +21,7 @@ services:
   hm_test:
     build:
       context: .
+    working_dir: /app
     command: npm run test
     container_name: hm_test
     depends_on:
