@@ -7,7 +7,7 @@ var ee = require('events');
 var dbConfig = require("./knexfile");
 var app = express();
 
-var port = 4000;
+var port = 4066;
 
 var statEmitter = new ee();
 var stats = {
