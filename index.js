@@ -4,12 +4,14 @@ const { Model } = require("objection");
 const dbConfig = require("./knexfile");
 const { initRoutes } = require("./src/routes/routes");
 const { startStatsListeners } = require("./src/events/events");
+const { logger } = require("./src/logger/logger");
 
 const db = knex(dbConfig.development);
 Model.knex(db);
 
 const app = express();
 app.use(express.json());
+app.use(logger);
 initRoutes(app);
 
 const port = 4066;
